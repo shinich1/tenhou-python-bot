@@ -180,6 +180,25 @@ class Table(object):
     def get_players_sorted_by_scores(self):
         return sorted(self.players, key=lambda x: (x.scores or 0, -x.first_seat), reverse=True)
 
+    def calculate_cost(self):
+        # calculates the cost function for optimization.
+        # payments using uma and oka
+        # +30000 for 1st, 5000 for 2nd, -10000 for 3rd, -15000 for 4th
+        self.recalculate_players_position()
+        score = self.player.scores
+        if self.player.position == 1:
+            score += 40000
+        elif self.player.position == 2:
+            score += 10000
+        elif self.player.position == 3:
+            score -= 10000
+        elif self.player.position == 4:
+            score -= 20000
+        payment = score - 30000
+        cost = -1 * payment / 1000 #ten 10
+        return cost
+
+
     @property
     def round_wind_tile(self):
         if self.round_wind_number < 4:

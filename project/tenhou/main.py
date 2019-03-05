@@ -8,10 +8,11 @@ from utils.settings_handler import settings
 logger = logging.getLogger('tenhou')
 
 
-def connect_and_play():
+def connect_and_play(params):
     logger.info('AI: {}, {}'.format(settings.AI_CLASS.version, settings.AI_PACKAGE))
 
     client = TenhouClient()
+    client.load_ai_params(params)
     client.connect()
 
     try:
@@ -28,3 +29,5 @@ def connect_and_play():
         logger.exception('Unexpected exception', exc_info=e)
         logger.info('Ending the game...')
         client.end_game(False)
+
+    return client.cost, client.end_with_error

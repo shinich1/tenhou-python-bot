@@ -15,7 +15,7 @@ IS_TOURNAMENT = False
 STAT_SERVER_URL = ''
 STAT_TOKEN = ''
 
-AI_PACKAGE = 'first_version'
+AI_PACKAGE = 'mloop'
 # class will be loaded automatically
 AI_CLASS = None
 

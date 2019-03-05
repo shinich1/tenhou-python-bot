@@ -3,7 +3,7 @@ from mahjong.constants import AKA_DORA_LIST
 from mahjong.tile import TilesConverter
 from mahjong.utils import is_honor, simplify, plus_dora, is_aka_dora, is_sou, is_man, is_pin
 
-from game.ai.first_version.strategies.main import BaseStrategy
+from game.ai.mloop.strategies.main import BaseStrategy
 
 
 class DiscardOption(object):

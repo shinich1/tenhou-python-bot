@@ -29,6 +29,7 @@ def set_up_logging(save_to_file=True):
     ai_logger.setLevel(logging.DEBUG)
     ai_logger.addHandler(ch)
 
+    fh = None
     if save_to_file:
         # we need it to distinguish different bots logs (if they were run in the same time)
         log_prefix = settings.LOG_PREFIX
@@ -41,3 +42,17 @@ def set_up_logging(save_to_file=True):
         fh.setFormatter(formatter)
         logger.addHandler(fh)
         ai_logger.addHandler(fh)
+    return {'stream':ch,'file':fh}
+
+def terminate_logging(handlers):
+    logger = logging.getLogger('tenhou')
+    ai_logger = logging.getLogger('ai')
+    logger.removeHandler(handlers['ch'])
+    ai_logger.removeHandler(handlers['ch'])
+    if fh:
+        logger.removeHandler(handlers['fh'])
+        ai_logger.removeHandler(handlers['fh'])
+    logger.setLevel(logging.WARNING)
+    ai_logger.setLevel(logging.WARNING)
+
+

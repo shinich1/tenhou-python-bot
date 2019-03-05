@@ -160,6 +160,9 @@ class Player(PlayerInterface):
         if self.ai:
             self.ai.erase_state()
 
+    def config_ai_params(self,params):
+        self.ai.load_params(params)
+
     def init_hand(self, tiles):
         self.tiles = tiles
 
@@ -221,8 +224,8 @@ class Player(PlayerInterface):
     def should_call_win(self, tile, enemy_seat):
         return self.ai.should_call_win(tile, enemy_seat)
 
-    def try_to_call_meld(self, tile, is_kamicha_discard):
-        return self.ai.try_to_call_meld(tile, is_kamicha_discard)
+    def try_to_call_meld(self, tile, is_kamicha_discard, remaining_tiles):
+        return self.ai.try_to_call_meld(tile, is_kamicha_discard, remaining_tiles)
 
     def enemy_called_riichi(self, player_seat):
         self.ai.enemy_called_riichi(player_seat)

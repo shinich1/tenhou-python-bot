@@ -32,11 +32,17 @@ class TenhouClient(Client):
     _count_of_empty_messages = 0
     _rating_string = None
     _socket_mock = None
+    cost = 1
+    end_with_error = True
+    ai_params={}
 
     def __init__(self, socket_mock=None):
         super().__init__()
         self.statistics = Statistics()
         self._socket_mock = socket_mock
+
+    def load_ai_params(self,params):
+        self.ai_params=params
 
     def connect(self):
         # for reproducer
@@ -200,6 +206,7 @@ class TenhouClient(Client):
         logger.info('Players: {}'.format(self.table.players))
 
         main_player = self.table.player
+        main_player.config_ai_params(self.ai_params)
 
         meld_tile = None
         tile_to_discard = None
@@ -396,7 +403,7 @@ class TenhouClient(Client):
                         if message[1].lower() == 'g':
                             is_kamicha_discard = True
 
-                        meld, tile_to_discard = self.player.try_to_call_meld(tile, is_kamicha_discard)
+                        meld, tile_to_discard = self.player.try_to_call_meld(tile, is_kamicha_discard, self.table.count_of_remaining_tiles)
                         if meld:
                             self._random_sleep(1, 2)
 
@@ -466,8 +473,12 @@ class TenhouClient(Client):
 
         if success:
             logger.info('End of the game')
+            self.end_with_error = False
+            self.cost = self.table.calculate_cost()
         else:
             logger.error('Game was ended without success')
+            self.end_with_error = True
+
 
     def _send_message(self, message):
         # tenhou requires an empty byte in the end of each sending message
