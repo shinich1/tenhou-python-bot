@@ -47,11 +47,11 @@ def set_up_logging(save_to_file=True):
 def terminate_logging(handlers):
     logger = logging.getLogger('tenhou')
     ai_logger = logging.getLogger('ai')
-    logger.removeHandler(handlers['ch'])
-    ai_logger.removeHandler(handlers['ch'])
-    if fh:
-        logger.removeHandler(handlers['fh'])
-        ai_logger.removeHandler(handlers['fh'])
+    logger.removeHandler(handlers['stream'])
+    ai_logger.removeHandler(handlers['stream'])
+    if handlers['file']:
+        logger.removeHandler(handlers['file'])
+        ai_logger.removeHandler(handlers['file'])
     logger.setLevel(logging.WARNING)
     ai_logger.setLevel(logging.WARNING)
 

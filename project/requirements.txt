@@ -7,3 +7,7 @@ requests==2.20.1
 # for dev needs
 flake8==3.6.0
 flake8-bugbear==18.8.0
+
+# for optimization
+tensorflow==1.10.0
+M-LOOP==2.2.0
